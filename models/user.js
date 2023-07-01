@@ -16,14 +16,6 @@ userSchema.pre('save', async function(next){
     this.isModified('password')? 
     this.password = await bcrypt.hash(this.password, 8):
     null;
-
-    next()
-})
-
-userSchema.pre('save', async function(next){
-    this.isModified('password')? 
-    this.password = await bcrypt.hash(this.password, 8):
-    null;
     next()
 })
 
