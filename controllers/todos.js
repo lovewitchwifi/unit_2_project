@@ -9,6 +9,7 @@ exports.create = async function (req, res){
         req.user.todos?
         req.user.todos.addToSet({ _id: todo._id }):
         req.user.todos = [{_id: todo._id }]
+        await todo.save()
         await req.user.save()
         res.json(todo)
     } catch (error) {
