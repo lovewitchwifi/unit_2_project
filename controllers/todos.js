@@ -19,7 +19,7 @@ exports.create = async function (req, res){
 
 exports.show = async function (req, res){
     try{
-        const todos = await Todo.findOne({ user: req.params.id })
+        const todos = await Todo.findOne({ user: req.user.id })
         res.json(todos)
     } catch(error){
         res.status(400).json({ message: error.message })

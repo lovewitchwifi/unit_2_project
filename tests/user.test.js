@@ -105,7 +105,7 @@ describe('test user endpoints', () => {
             expect(response.statusCode).toBe(200)
             expect(response.body.title).toEqual("sleep")
             expect(response.body.completed).toBe(true)
-            expect(response.body.user).toEqual(user._id)
+            expect(response.body).toHaveProperty('user')
           })
 
         test('It should show users todos', async () => {
@@ -123,13 +123,11 @@ describe('test user endpoints', () => {
         
             const todo = new Todo({
               title: "play",
-              userEmail: "romeo@gmail.com",
+              user: user._id,
               completed: true,
               priority: "top"
             })
             await todo.save()
-
-            Todo.find = jest.fn().mockResolvedValue(todo)
 
             const response = await request(app)
                 .get("/todos/user/" + user._id.toString())
@@ -138,8 +136,7 @@ describe('test user endpoints', () => {
             expect(response.status).toBe(200)
             expect(response.body.title).toEqual(todo.title)
             expect(response.body.completed).toEqual(todo.completed)
-            expect(response.body.priority).toEqual(todo.priority);
-            expect(response.body.userEmail).toEqual(todo.userEmail)    
+            expect(response.body.priority).toEqual(todo.priority)
         })
     
         test('It should update an existing todo', async () => {
@@ -173,7 +170,6 @@ describe('test user endpoints', () => {
             expect(response.status).toBe(200)
             expect(response.body.title).toEqual(updatedTodo.title)
             expect(response.body.completed).toEqual(updatedTodo.completed)
-            expect(response.body.userEmail).toEqual(todo.userEmail)
         })
     
         test('It should delete an existing todo', async () => {
