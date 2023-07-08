@@ -4,11 +4,11 @@ const User = require('../models/user')
 
 exports.create = async function (req, res){
     try {
-        req.body.user = req.user._id
+        req.body.userEmail = req.user._id
         const todo = await Todo.create(req.body)
-        req.user.todos?
-        req.user.todos.addToSet({ _id: todo._id }):
-        req.user.todos = [{_id: todo._id }]
+        req.user.todos
+        ? req.user.todos.addToSet({ _id: todo._id })
+        : req.user.todos = [{_id: todo._id }]
         await todo.save()
         await req.user.save()
         res.json(todo)
@@ -19,8 +19,8 @@ exports.create = async function (req, res){
 
 exports.show = async function (req, res){
     try{
-        const todo = await Todo.findOne({ _id: req.params.id })
-        res.json(todo)
+        const todos = await Todo.findOne({ user: req.params.id })
+        res.json(todos)
     } catch(error){
         res.status(400).json({ message: error.message })
     }
@@ -28,7 +28,7 @@ exports.show = async function (req, res){
 
 exports.indexComplete = async function (req, res){
     try{
-        const todos = await Todo.find({ completed: true, user: req.user._id })
+        const todos = await Todo.find({ completed: true, user: req.user.email })
         res.json(todos)
     } catch(error){
         res.status(400).json({ message: error.message })
@@ -37,7 +37,7 @@ exports.indexComplete = async function (req, res){
 
 exports.indexNotComplete = async function (req, res){
     try{
-        const todos = await Todo.find({ completed: false,  user: req.user._id })
+        const todos = await Todo.find({ completed: false,  user: req.user.email })
         res.json(todos)
     } catch(error){
         res.status(400).json({ message: error.message })

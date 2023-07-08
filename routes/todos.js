@@ -4,7 +4,7 @@ const todoCtrl = require('../controllers/todos')
 
 
 // Index /todos
-router.get('/', todoCtrl.indexNotComplete)
+router.get('/notcompleted', todoCtrl.indexNotComplete)
 
 // Index /todos/completed
 router.get('/completed', todoCtrl.indexComplete)
@@ -19,6 +19,6 @@ router.put('/:id', todoCtrl.update)
 router.post('/', todoCtrl.create)
 
 // Show /todos/:id
-router.get('/:id', todoCtrl.show)
+router.get('/user/:id', todoCtrl.show)
 
 module.exports = router 
