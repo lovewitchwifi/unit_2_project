@@ -4,7 +4,7 @@ const User = require('../models/user')
 
 exports.create = async function (req, res){
     try {
-        req.body.userEmail = req.user._id
+        req.body.user = req.user._id
         const todo = await Todo.create(req.body)
         req.user.todos
         ? req.user.todos.addToSet({ _id: todo._id })

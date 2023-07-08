@@ -2,7 +2,7 @@ const request = require('supertest')
 const mongoose = require('mongoose')
 const { MongoMemoryServer } = require('mongodb-memory-server')
 const app = require('../app')
-const server = app.listen(3000)
+const server = app.listen(8080)
 const User = require('../models/user')
 const Todo = require('../models/todo')
 let mongoServer
@@ -13,7 +13,7 @@ beforeAll(async () => {
 })
 
 afterAll(async () => {
-    await mongoose.connect.close()
+    await mongoose.connect.close
     mongoServer.stop()
     server.close()
 })
@@ -105,7 +105,7 @@ describe('test user endpoints', () => {
             expect(response.statusCode).toBe(200)
             expect(response.body.title).toEqual("sleep")
             expect(response.body.completed).toBe(true)
-            expect(response.body.userEmail).toEqual("meow@gmail.com")
+            expect(response.body.user).toEqual(user._id)
           })
 
         test('It should show users todos', async () => {
